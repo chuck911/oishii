@@ -7,18 +7,15 @@ class TagController extends CController
 	{
 		$tag = Tag::model()->find('name=:name',array(':name'=>$tagName));
 		if(!$tag) throw new CHttpException(404,'The requested page does not exist.');
-		$page = (int)Yii::app()->request->getParam('page',1);
-		$taggings = Tagging::model()->findAll(array(
-			'limit'=>20,
-			'condition'=>'tagID=:tagID',
-			'params'=>array(':tagID'=>$tag->id),
-			'offset'=>($page-1)*20,
+		$dataProvider=new CActiveDataProvider('Tagging',array(
+			'criteria'=>array(
+				'order'=>'t.id desc',
+				'condition'=>'tagID=:tagID',
+				'params'=>array(':tagID'=>$tag->id),
+				'with'=>array('bookmark'),
+			),
 		));
-		$bookmarks = array();
-		foreach ($taggings as $tagging) {
-			$bookmarks[]=$tagging->bookmark;
-		}		
-		$this->render('bookmark',array('bookmarks'=>$bookmarks,'tag'=>$tag));
+		$this->render('bookmark',array('dataProvider'=>$dataProvider,'tag'=>$tag));
 	}
 	
 	public function actionTest()
@@ -35,7 +32,7 @@ class TagController extends CController
 		$tag2 = Tag::model()->find('name=:name',array(':name'=>$tagName2));
 		if(!$tag1||!$tag2) throw new CHttpException(404,'The requested page does not exist.');
 		$bookmarks = Bookmark::with2Tags($tag1->id,$tag2->id);
-		$this->render('bookmark',array('bookmarks'=>$bookmarks,'tag'=>$tag1));
+		$this->render('2tagbookmark',array('bookmarks'=>$bookmarks,'tag'=>$tag1));
 	}
 	
 }

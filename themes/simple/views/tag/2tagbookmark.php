@@ -14,19 +14,11 @@
 <div class="content">
 	
 	<ul class="bookmark-list">
-	<?php foreach ($dataProvider->getData() as $tagging): ?>
-		<?php $this->renderPartial('/bookmark/_bookmarkitem',array('bookmark'=>$tagging->bookmark)); ?>
+	<?php foreach ($bookmarks as $bookmark): ?>
+		<?php $this->renderPartial('/bookmark/_bookmarkitem',array('bookmark'=>$bookmark)); ?>
 	<?php endforeach ?>
 	</ul>
 	
-	<?php
-	 $this->widget('CLinkPager', array(
-			'id'=>'bookmark-pager',
-	    'pages' => $dataProvider->pagination,
-			'nextPageLabel'=>'&gt;&gt;',
-			'prevPageLabel'=>'&lt;&lt;',
-			'header'=>'',
-			'maxButtonCount'=>1,
-	)) ?>
-	
 </div>
+
+
