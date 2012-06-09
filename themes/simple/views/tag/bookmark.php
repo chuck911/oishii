@@ -2,10 +2,10 @@
 	<h1><?php echo CHtml::link(Yii::app()->name,Yii::app()->homeUrl) ?></h1>
 	<div id='stat'>
 		<dl class="stat-tags">
-			<dd><?php echo CHtml::link('311','#') ?></dd><dt>tags</dt>
+			<dd><?php echo CHtml::link(Tag::num(),'#') ?></dd><dt>tags</dt>
 		</dl>
 		<dl class="stat-links">
-			<dd><?php echo CHtml::link('2011',array('/bookmark')) ?></dd><dt>links</dt>
+			<dd><?php echo CHtml::link(Bookmark::num(),array('/bookmark')) ?></dd><dt>links</dt>
 		</dl>
 	</div>
 	<h2 id="current-tag"><?php echo $tag->name ?></h2>
